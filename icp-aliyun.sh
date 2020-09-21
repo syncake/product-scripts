@@ -6,7 +6,7 @@ if [[ -z $times ]]; then
 fi
 #domains=(Linps.cn)
 #domains=(mouthhi.com udahuo.com yuanweibox.com o192.com)
-domains=$(cat ./domain.dat)
+domains=$(cat ./data/domain.dat)
 
 i=0
 while [[ i -lt $times ]]; do 
