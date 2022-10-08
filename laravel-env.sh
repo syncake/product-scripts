@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 projname="hodoken"
+projpath="/opt/api"
 
 apt update -y
 apt upgrade -y 
@@ -20,9 +21,8 @@ apt install supervisor unzip git mariadb-server mariadb-client nginx redis-serve
 version='7.4'
 apt install php${version}-fpm php${version}-gmp php${version}-gd php${version}-mysql php${version}-redis php-redis php${version}-zip php${version}-curl php${version}-bcmath php${version}-xml php${version}-mbstring php-pear php${version}-dev -y
 
-dbname=$projname
-mysql -e "create database ${dbname} charset=utf8mb4;"
-mysql -e "grant all privileges on ${dbname}.* to ${dbname}@localhost identified by 'X0affj8XLQc3Q';"
+mysql -e "create database ${projname} charset=utf8mb4;"
+mysql -e "grant all privileges on ${projname}.* to ${projname}@localhost identified by 'X0affj8XLQc3Q';"
 
 ## 2022-10-09
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -37,3 +37,9 @@ mkdir storage/logs
 chown -R www-data:www-data .
 
 ./artisan key:generate
+
+# crontab setup
+echo "0 * * * * /usr/bin/chown -R www-data:www-data ${projpath}" >> /var/spool/cron/crontabs/root
+echo "0 * * * * /usr/bin/supervisorctl start all" >> /var/spool/cron/crontabs/root
+## optional
+echo "* * * * * /usr/bin/php ${projpath}/artisan schedule:run" >> /var/spool/cron/crontabs/root
