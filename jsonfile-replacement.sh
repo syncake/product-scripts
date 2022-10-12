@@ -9,7 +9,7 @@ if [[ $? -eq 0 ]]; then
 
   port_previous = $(grep 'server_port' $config_file | cut -d ':' -f 2 | awk '{print $NF}' | cut -d ',' -f 1)
   if test -z $port_previous; then
-    ufw delete allow $port_target
+    ufw delete allow $port_previous
   fi
 fi
 
