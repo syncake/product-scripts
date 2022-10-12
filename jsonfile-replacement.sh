@@ -7,10 +7,10 @@ which ufw
 if [[ $? -eq 0 ]]; then
   ufw allow $port_target
 
-  port_previous = $(grep 'server_port' $config_file | cut -d ':' -f 2 | awk '{print $NF}' | cut -d ',' -f 1)
+  port_previous=$(grep 'server_port' $config_file | cut -d ':' -f 2 | awk '{print $NF}' | cut -d ',' -f 1)
   if test -z $port_previous; then
     ufw delete allow $port_previous
   fi
 fi
 
-/usr/bin/sed -i 's/\"server_port\":\s*[0-9]\+/\"server_port\": '$port_target'/'
+/usr/bin/sed -i 's/\"server_port\":\s*[0-9]\+/\"server_port\": '$port_target'/' $config_file
