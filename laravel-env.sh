@@ -21,6 +21,10 @@ apt install supervisor unzip git mariadb-server mariadb-client nginx redis-serve
 version='7.4'
 apt install php${version}-fpm php${version}-gmp php${version}-gd php${version}-mysql php${version}-redis php-redis php${version}-zip php${version}-curl php${version}-bcmath php${version}-xml php${version}-mbstring php-pear php${version}-dev -y
 
+## php command may be required to re-config by alternatives
+update-alternatives --config php
+## and then select the target version
+
 mysql -e "create database ${projname} charset=utf8mb4;"
 mysql -e "grant all privileges on ${projname}.* to ${projname}@localhost identified by 'X0affj8XLQc3Q';"
 
