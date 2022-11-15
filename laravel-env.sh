@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-projname="hodoken"
+projname="hadoken"
 projpath="/opt/api"
 
 apt update -y
