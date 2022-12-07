@@ -1,8 +1,9 @@
 #!/bin/bash
 
+dbname="hadoken"
+
 hostname="web"
 hostuser="root"
-dbname="hadoken"
 path_local="/opt/db/"
 
 #######################
