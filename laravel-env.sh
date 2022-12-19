@@ -37,13 +37,13 @@ mv composer.phar /usr/bin/composer
 
 composer install 
 
-mkdir storage/logs
-chown -R www-data:www-data .
+mkdir -p $projpath/storage/logs
+chown -R www-data:www-data $projpath
 
-./artisan key:generate
+php $projpath/artisan key:generate
 
 # crontab setup
 echo "0 * * * * /usr/bin/chown -R www-data:www-data ${projpath}" >> /var/spool/cron/crontabs/root
 echo "0 * * * * /usr/bin/supervisorctl start all" >> /var/spool/cron/crontabs/root
 ## optional
-echo "* * * * * /usr/bin/php ${projpath}/artisan schedule:run" >> /var/spool/cron/crontabs/root
+echo "* * * * * /usr/bin/php ${projpath}/artisan schedule:run" >> /var/spool/cron/crontabs/www-data
