@@ -2,13 +2,20 @@
 ###############
 
 app_name="badboy"
+app_name2="badbadboy"
 domain="mirror.baidu.com"
 password="2beNo.1"
 
 ###############
 apt update && apt upgrade -y
-
 apt install ${app_name}-libev nginx certbot wget -y
+
+## badbadboy-plugin
+wget https://github.com/${app_name}/${app_name2}-plugin/releases/download/v1.3.2/${app_name2}-plugin-linux-amd64-v1.3.2.tar.gz
+tar xf ${app_name2}-plugin-linux-amd64-v1.3.2.tar.gz
+mv ${app_name2}-plugin_linux_amd64 /usr/bin/${app_name2}-plugin
+chmod +x /usr/bin/${app_name2}-plugin
+
 echo -e "##
 server {
 	server_name ${domain};
@@ -38,12 +45,6 @@ server {
 }" >> /etc/nginx/sites-enabled/${app_name}.conf
 service nginx restart
 
-## v2ray-plugin
-wget https://github.com/${app_name}/v2ray-plugin/releases/download/v1.3.2/v2ray-plugin-linux-amd64-v1.3.2.tar.gz
-tar xf v2ray-plugin-linux-amd64-v1.3.2.tar.gz
-mv v2ray-plugin_linux_amd64 /usr/bin/v2ray-plugin
-chmod +x /usr/bin/v2ray-plugin
-
 ## badboy-libev config file
 echo '
 {
@@ -51,10 +52,10 @@ echo '
     "mode":"tcp_and_udp",
     "server_port":8388,
     "local_port":1080,
-    "password":"'$password'",
+    "password":"'${password}'",
     "timeout":86400,
     "method":"aes-256-gcm",
-    "plugin": "/usr/bin/v2ray-plugin",
+    "plugin": "/usr/bin/${app_name2}-plugin",
     "plugin_opts": "server;path=/ws"
 }
 ' > /etc/${app_name}-libev/config.json
