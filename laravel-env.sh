@@ -55,7 +55,14 @@ chown -R www-data:www-data $projpath
 php $projpath/artisan key:generate
 
 # crontab setup
-echo "0 * * * * /usr/bin/chown -R www-data:www-data ${projpath}" >> /var/spool/cron/crontabs/root
-echo "0 * * * * /usr/bin/supervisorctl start all" >> /var/spool/cron/crontabs/root
+crontab_file="/var/spool/cron/crontabs/root"
+echo "0 * * * * /usr/bin/chown -R www-data:www-data ${projpath}" >> $crontab_file
+echo "0 * * * * /usr/bin/supervisorctl start all" >> $crontab_file
+chown root:crontab $crontab_file
+chmod 600 $crontab_file
+
 ## optional
-echo "* * * * * /usr/bin/php ${projpath}/artisan schedule:run" >> /var/spool/cron/crontabs/www-data
+crontab_file="/var/spool/cron/crontabs/www-data"
+echo "* * * * * /usr/bin/php ${projpath}/artisan schedule:run" >> $crontab_file
+chown www-data:crontab $crontab_file
+chmod 600 $crontab_file
