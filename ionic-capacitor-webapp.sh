@@ -44,4 +44,4 @@ exit 0
 ## url: https://stackoverflow.com/questions/60549868/ionic-5-how-to-replace-default-icon-and-splash-screen-image-and-generate-resou
 ## comment: make sure directory resources exists and Add your icon.png (1024x1024 px) and splash.png (2732x2732 px) files to the 'resources' folder 
 npm install capacitor-resources -g
-capacitor-resources -p android
+capacitor-resources -p android -t cover
