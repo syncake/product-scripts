@@ -10,6 +10,11 @@ apt upgrade -y
 # apt-get install software-properties-common -y
 # add-apt-repository ppa:ondrej/php -y && apt update -y
 
+## debian12
+# apt install -y apt-transport-https lsb-release ca-certificates wget 
+# wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+# echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list && apt update
+
 apt install supervisor unzip git mariadb-server mariadb-client nginx redis-server -y
 
 version='7.4'
